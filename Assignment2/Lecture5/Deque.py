@@ -40,29 +40,73 @@ class Deque:
 
     # Add element n as first entry in deque
     def add_first(self, n):
-        pass
+        newNode = Node(n, self.head)
+        self.head = newNode
+
+        # Assign to tail if empty queue
+        if self.tail is None:
+            self.tail = newNode
+
+        self.size += 1
 
     # Returns (without removing) the last entry in the deque.
     # Raises IndexError when accessing empty deque.
     def get_last(self):
-        pass
+        if self.size < 1:
+            raise IndexError('Queue is empty, nothing to access')
+        return self.tail.value
 
     # Returns (without removing) the first entry in the deque
     # Raises IndexError when accessing empty deque.
     def get_first(self):
-        pass
+        if self.size < 1:
+            raise IndexError('Queue is empty, nothing to access')
+        return self.head.value
 
     # Removes and returns the first entry in the deque.
     # Raises IndexError when accessing empty deque.
     # The case size = 1 requires speciall handling
     def remove_first(self):
-        pass
+        if self.size < 1:
+            raise IndexError('Queue is empty, nothing to remove')
+
+        headVal = self.head.value
+
+        if self.size == 1:
+            self.head = None
+            self.tail = None
+
+        else:
+            self.head = self.head.nxt
+
+        self.size -= 1
+        return headVal
 
     # Removes and returns the last entry in the deque.
     # Raises IndexError when accessing empty deque.
     # The case size = 1 requires speciall handling
     def remove_last(self):
-        pass
+        if self.size < 1:
+            raise IndexError('Queue is empty, nothing to remove')
+
+        tailVal = self.tail.value
+
+        if self.size == 1:
+            self.head = None
+            self.tail = None
+
+        else:
+            # Crawl to get previous Node of tail
+            prevNode = self.head
+            while prevNode.nxt != self.tail:
+                prevNode = prevNode.nxt
+
+            # Assign previous Node as tail
+            self.tail = prevNode
+            self.tail.nxt = None
+
+        self.size -= 1
+        return tailVal
 
     # Returns an iterator over the deque
     # allowing for simple iteration over all elements
