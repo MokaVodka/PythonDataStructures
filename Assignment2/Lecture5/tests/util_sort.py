@@ -4,8 +4,7 @@
 import os
 import sys
 
-# Path works when Assignment1 is the opened folder in VSCode
-# and Run -> Debug current script
+# Path works when respo is the opened folder in VSCode
 sys.path.append(os.path.abspath('./Assignment1/Lecture3/'))
 
 import sort_algorithms as sa
