@@ -1,72 +1,69 @@
 import Heap as hp
 
-# Program starts
-print("Heap demo starts\n")
+
+# Start demo
+print('Heap demo starts')
 heap = hp.Heap()
+print('')
 
-# Add 10 integers using add_last and print list content
+
+# Add int with add() and print heap content
 for i in range(1, 11):
-    heap.add_last(i)
+    heap.add(i)
 print(heap)
-print("Size:", heap.size)
+print(f'get_size(): {heap.get_size()}')
 
-# Add 10 integers using add_first and print list content
 for i in range(11, 21):
-    heap.add_first(i)
+    heap.add(i)
 print(heap)
-print("Size:", heap.size)
+print(f'get_size(): {heap.get_size()}')
+print('')
 
-# Demo get_last, get_first, remove_first, remove_last
-print("\nget_last():", heap.get_last())
-print("get_first():", heap.get_first())
-print("remove_first():", heap.remove_first())
-print("remove_last():", heap.remove_last())
+
+# Demo peek(), pull_high()
+print(f'peek(): {heap.peek()}')
+print(f'pull_high(): {heap.pull_high()}')
 print(heap)
-print("Size:", heap.size)
-print("is_empty():", heap.is_empty())
+print(f'get_size(): {heap.get_size()}')
+print(f'is_empty(): {heap.is_empty()}')
+print('')
 
 
 # Test add and remove all
-print("\nTest to remove all elements")
-heap = hp.Heap()   # A new empty heap
+print('Test to remove all elements')
+heap = hp.Heap()
 for i in range(100, 106):
-    heap.add_first(i)
-print("After adding elements:", heap)
+    heap.add(i)
+print(f'After adding elements: {heap}')
 
 while not heap.is_empty():
-    heap.remove_last()
-print("After removing all elements:", heap)
-print("Size:", heap.size)
-print("is_empty():", heap.is_empty())
+    heap.pull_high()
+print(f'After removing all elements: {heap}')
+print(f'get_size(): {heap.get_size()}')
+print(f'is_empty(): {heap.is_empty()}')
+print('')
 
-# Demo iterator  (Part of Lecture 6)
-print("\nIterator test")
-heap = hp.Heap()   # A new empty heap
+
+# Demo iterator
+print('Iterator test')
+heap = hp.Heap()
 for i in range(1, 11):  # ==> 1,2,3,...,9,10
-    heap.add_last(i)
+    heap.add(i)
 for n in heap:
-    print(n, end=" ")
-print()
+    print(n, end=' ')
+print('')
+print('')
+
 
 # Demo exceptions
-print("\nAccessing an empty heap")
-empty = hp.Heap()     # An empty heap
+print('Accessing an empty heap')
+empty = hp.Heap()
 try:
-    empty.get_last()
+    empty.peek()
 except IndexError as exc:
-    print("get_last:", exc)
+    print(f'peek(): {exc}')
 
 try:
-    empty.get_first()
+    empty.pull_high()
 except IndexError as exc:
-    print("get_first:", exc)
-
-try:
-    empty.remove_first()
-except IndexError as exc:
-    print("remove_first:", exc)
-
-try:
-    empty.remove_last()
-except IndexError as exc:
-    print("remove_last:", exc)
+    print(f'pull_high(): {exc}')
