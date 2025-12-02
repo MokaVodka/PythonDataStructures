@@ -1,60 +1,93 @@
 import pytest
 import random
-from util_sort import gen_random_list
+import util_sort
 
 
-# Test correctness
-def correct_test(sort_algo, listSize):
-    toSort = gen_random_list(listSize)
+# Act and Assert
+def act_assert(toSort, sort_algo):
     expect = sorted(toSort)
     result = sort_algo(toSort)
     assert result == expect, f"Exp {expect}, got {result}"
+
+
+@pytest.fixture
+def sort_algo():
+    algos = util_sort.sort_algorithms()
+    return algos[0]
+
+
+# List population
+def populated_list():
+    return util_sort.gen_random_list(15)
+
+
+# Test empty
+def test_empty(sort_algo):
+    toSort = []
+    act_assert(toSort, sort_algo)
+
+
+# Test 1 length list
+def test_len1(sort_algo):
+    toSort = [0]
+    act_assert(toSort, sort_algo)
+
+
+# Test random
+def test_random(sort_algo):
+    toSort = populated_list()
+    act_assert(toSort, sort_algo)
 
 
 # Test sorted
-def sorted_test(sort_algo, listSize, reversed=False):
-    toSort = gen_random_list(listSize)
-    toSort = sorted(toSort)
-    expect = toSort
-
+def test_sorted(sort_algo, reversed=False):
+    toSort = sorted(populated_list())
     if reversed:
         toSort = toSort[::-1]
-
-    result = sort_algo(toSort)
-    assert result == expect, f"Exp {expect}, got {result}"
+    act_assert(toSort, sort_algo)
 
 
 # Test duplicates
-def duplicate_test(sort_algo, listSize=15, lst=None):
-    toSort = []
+def test_duplicate(sort_algo, dupeType=0):
+    toSort = populated_list()
 
-    if lst:
-        toSort = lst
+    # All dupes
+    if dupeType == 0:
+        for i in range(1, len(toSort)):
+            toSort[i] = toSort[0]
+
+    # Pair dupes
+    elif dupeType == 1:
+        for i in range(1, len(toSort), 2):
+            toSort[i] = toSort[i - 1]
+
+    # Varying dupes
     else:
-        while len(toSort) < listSize:
-            toSort.append(random.randint(-listSize*10, listSize*10))
-            toSort.append(toSort[len(toSort) - 1])
+        endDupe = 1
+        for i in range(1, len(toSort)):
+            if i == endDupe:
+                endDupe += random.randint(1, 4)
+            else:
+                toSort[i] = toSort[i - 1]
 
-    expect = sorted(toSort)
-    result = sort_algo(toSort)
-    assert result == expect, f"Exp {expect}, got {result}"
+    act_assert(toSort, sort_algo)
 
 
 # Main test
-def main_test(sort_algo):
+def test_main(sort_algo):
 
     # Test list size of 0 | 1
-    correct_test(sort_algo, 0)
-    correct_test(sort_algo, 1)
+    test_empty(sort_algo)
+    test_len1(sort_algo)
 
     # Test duplicates All | Pair | Variable amount
-    duplicate_test(sort_algo, lst=[7, 7, 7, 7, 7, 7, 7, 7])
-    duplicate_test(sort_algo, listSize=15)
-    duplicate_test(sort_algo, lst=[9, 7, 7, 7, 7, 10, 10, 1, 5])
+    test_duplicate(sort_algo, 0)
+    test_duplicate(sort_algo, 1)
+    test_duplicate(sort_algo, 2)
 
     # Test random
-    correct_test(sort_algo, 15)
+    test_random(sort_algo)
 
     # Test sorted
-    sorted_test(sort_algo, 15, reversed=False)
-    sorted_test(sort_algo, 15, reversed=True)
+    test_sorted(sort_algo, reversed=False)
+    test_sorted(sort_algo, reversed=True)

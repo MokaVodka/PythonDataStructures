@@ -6,7 +6,8 @@ def check_all_algorithms():
     algos = util_sort.sort_algorithms()
 
     for algo in algos:
-        print(algo.__name__)
+        print(f'Checking {algo.__name__}()...')
+        test_sorting.test_main(algo)
 
 
 check_all_algorithms()
