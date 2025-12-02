@@ -39,14 +39,14 @@ print("After removing all elements:", deque)
 print("Size:", deque.size)
 print("is_empty():", deque.is_empty())
 
-# # Demo iterator  (Part of Lecture 6)
-# print("\nIterator test")
-# deque = deq.Deque()   # A new empty deque
-# for i in range(1, 11):  # ==> 1,2,3,...,9,10 
-#     deque.add_last(i)
-# for n in deque:
-#     print(n, end=" ")
-# print()
+# Demo iterator  (Part of Lecture 6)
+print("\nIterator test")
+deque = deq.Deque()   # A new empty deque
+for i in range(1, 11):  # ==> 1,2,3,...,9,10
+    deque.add_last(i)
+for n in deque:
+    print(n, end=" ")
+print()
 
 # Demo exceptions
 print("\nAccessing an empty deque")

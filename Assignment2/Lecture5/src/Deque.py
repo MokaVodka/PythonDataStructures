@@ -7,6 +7,20 @@ class Node:
         self.nxt = next
 
 
+class DequeIter:
+    def __init__(self, head):
+        self.iterObj = head
+
+    def __next__(self):
+        if self.iterObj is None:
+            raise StopIteration
+        else:
+            value = self.iterObj.value
+            # Set next iter object to continue iterator
+            self.iterObj = self.iterObj.nxt
+            return value
+
+
 class Deque:
     def __init__(self):
         self.head = None
@@ -112,4 +126,4 @@ class Deque:
     # allowing for simple iteration over all elements
     # Part of Lecture 6
     def __iter__(self):
-        pass
+        return DequeIter(self.head)
