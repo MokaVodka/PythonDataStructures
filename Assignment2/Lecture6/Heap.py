@@ -5,11 +5,11 @@ class Heap:
 
     # String repr. of heap content
     def __str__(self):
-        s = "{ "
+        s = '{ '
         for node in self.array:
             if node is not None:
-                s += str(node) + " "
-        s += "}"
+                s += str(node) + ' '
+        s += '}'
         return s
 
     # Current heap size
@@ -79,26 +79,39 @@ class Heap:
             return topVal
 
         # Swap with highest child
-        arraySize = len(self.array)
-        parent, child = 1, 2  # Starts at root and left child
+        parent = 1  # Starts at root
         parentVal = self.array[parent]
+
+        child = parent * 2
+        isRight = False
+        arraySize = len(self.array)
 
         # Stop swap process when:
         # a. child reaches end of array
         # b. child reaches end of current parent
-        while child < arraySize and child <= ((parent * 2) + 1):
+        while child < arraySize and child <= (parent * 2 + 1):
             childVal = self.array[child]
 
             if childVal > parentVal:
-                # Swap value
+                # Already found larger value on left child
+                # Compare left and right child
+                # Override child vars if right is larger
+                if not isRight and child + 1 < arraySize:
+                    if childVal < self.array[child + 1]:
+                        child += 1
+                        childVal = self.array[child]
+
+                # Swap parent and child
                 self.array[child] = parentVal
                 self.array[parent] = childVal
 
                 # Set new comparison indexes
                 parent = child
                 child = parent * 2
+                isRight = False
             else:
                 child += 1
+                isRight = True
 
         return topVal
 
