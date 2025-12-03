@@ -6,13 +6,14 @@ import sys
 
 # Path works when respo is the opened folder in VSCode
 sys.path.append(os.path.abspath('./Assignment1/Lecture3/'))
+sys.path.append(os.path.abspath('./Util/'))
 
 import sort_algorithms as sa
-import util
+from list_gen import get_random_list
 
 
 def gen_random_list(size):
-    return util.gen_random_list(size)
+    return get_random_list(size)
 
 
 def sort_algorithms():
