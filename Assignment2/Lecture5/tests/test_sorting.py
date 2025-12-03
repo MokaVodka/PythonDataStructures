@@ -1,6 +1,7 @@
 import pytest
 import random
-import util_sort
+from util_test import sort_algorithms
+from util_test import gen_random_list
 
 
 # Act and Assert
@@ -12,13 +13,13 @@ def act_assert(toSort, sort_algo):
 
 @pytest.fixture
 def sort_algo():
-    algos = util_sort.sort_algorithms()
+    algos = sort_algorithms()
     return algos[0]
 
 
 # List population
 def populated_list():
-    return util_sort.gen_random_list(15)
+    return gen_random_list(15)
 
 
 # Test empty

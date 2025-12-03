@@ -1,9 +1,9 @@
 import test_sorting
-import util_sort
+from util_test import sort_algorithms
 
 
 def check_all_algorithms():
-    algos = util_sort.sort_algorithms()
+    algos = sort_algorithms()
 
     for algo in algos:
         print(f'Checking {algo.__name__}()...')
