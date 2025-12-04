@@ -22,6 +22,7 @@ def sort_algorithms():
     return [sa.selection_sort, sa.bubble_sort, sa.insertion_sort,
             sa.merge_sort, sa.quick_sort, sa.improved_quick_sort]
 
+
 # Can't use Deque as name because that's the same as Deque class
 def create_Deque():
     return deq.Deque()

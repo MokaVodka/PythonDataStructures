@@ -1,5 +1,5 @@
 import pytest
-from util_test import Fraction
+from util_fraction import Fraction
 
 
 def assert_result(result, expect):
