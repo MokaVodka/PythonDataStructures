@@ -10,9 +10,9 @@ class Fraction:
 
         self.__numerator = numerator
         self.__denominator = denominator
-        self.simplify()
+        self.__simplify()
 
-    def simplify(self):
+    def __simplify(self):
         # 4/-5 -> -4/5 | -4/-5 -> 4/5
         if self.__denominator < 0:
             self.__numerator = -self.__numerator
@@ -33,7 +33,7 @@ class Fraction:
         self.__numerator //= gcd
         self.__denominator //= gcd
 
-    def check_type(self, other):
+    def __check_type(self, other):
         otherType = type(other)
         isInt = otherType is int
         isFraction = otherType is Fraction
@@ -44,7 +44,7 @@ class Fraction:
         return isInt, isFraction
 
     def __add__(self, other):
-        isInt, isFraction = self.check_type(other)
+        isInt, isFraction = self.__check_type(other)
 
         # Don't modify inputs
         t_numerator = self.__numerator
@@ -73,7 +73,7 @@ class Fraction:
             return None
 
     def __sub__(self, other):
-        isInt, isFraction = self.check_type(other)
+        isInt, isFraction = self.__check_type(other)
 
         # Don't modify inputs
         t_numerator = self.__numerator
@@ -102,7 +102,7 @@ class Fraction:
             return None
 
     def __mul__(self, other):
-        isInt, isFraction = self.check_type(other)
+        isInt, isFraction = self.__check_type(other)
 
         # Don't modify inputs
         t_numerator = self.__numerator
@@ -121,7 +121,7 @@ class Fraction:
             return None
 
     def __truediv__(self, other):
-        isInt, isFraction = self.check_type(other)
+        isInt, isFraction = self.__check_type(other)
 
         # Don't modify inputs
         t_numerator = self.__numerator
