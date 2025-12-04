@@ -32,12 +32,13 @@ print('')
 # Test add and remove all
 print('Test to remove all elements')
 heap = hp.Heap()
-for i in range(100, 106):
+for i in range(0, 21, 2):
     heap.add(i)
 print(f'After adding elements: {heap}')
 
 while not heap.is_empty():
-    heap.pull_high()
+    removed = heap.pull_high()
+    print(f'Removed: {removed}')
 print(f'After removing all elements: {heap}')
 print(f'get_size(): {heap.get_size()}')
 print(f'is_empty(): {heap.is_empty()}')
