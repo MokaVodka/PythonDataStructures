@@ -40,7 +40,7 @@ class Fraction:
         isValidType = isInt or isFraction
 
         if other is None or not isValidType:
-            raise ValueError('Value to be added must be an int or Fraction')
+            raise ValueError('Other value must be an int or Fraction')
         return isInt, isFraction
 
     def __add__(self, other):
