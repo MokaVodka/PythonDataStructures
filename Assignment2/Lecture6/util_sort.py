@@ -6,11 +6,10 @@ from util_fast_sort import fast_merge_sort
 import os
 import sys
 
-# Path works when 1DV505/respo is the opened folder in VSCode
+# Path works when respo is the opened folder in VSCode
 sys.path.append(os.path.abspath('./Assignment1/Lecture3/'))
 sys.path.append(os.path.abspath('./Util/'))
 
-# Shaddup Flake8 >:(
 import sort_algorithms as sa
 from list_gen import get_random_list
 from util import filter_plot_data
