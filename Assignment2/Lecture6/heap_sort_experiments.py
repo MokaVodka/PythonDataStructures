@@ -4,13 +4,18 @@ import Heap as hp
 
 
 def heap_sort(lst):
+    result = []
+
+    # Add elements to heap
     heap = hp.Heap()
     for num in lst:
         heap.add(num)
 
-    result = heap
+    # Pull from heap
+    while not heap.is_empty():
+        result.append(heap.pull_high())
 
-    return result
+    return result[::-1]
 
 
 # -- Simplify sort_run --
@@ -21,7 +26,7 @@ def run_sorts():
     algos.append(heap_sort)
 
     # Limit of merge sort on my machine
-    sizeRange = range(2000, 13501, 800)
+    sizeRange = range(10 * 1000, 160 * 1000, 10 * 1000)
     sizes = [i for i in sizeRange]
     times = []
 
@@ -65,7 +70,7 @@ def compare_algo(sizeTimes):
         ratio = ratioM + ' : ' + ratioQ + ':' + f'{ratioH:.2f}'
 
         print(f'{sizes[i]:>9} | {timeM:>5} | {timeQ:>5} | ', end='')
-        print(f'{timeH:>4} | {ratio}')
+        print(f'{timeH:>5} | {ratio}')
 
     print('')
 
