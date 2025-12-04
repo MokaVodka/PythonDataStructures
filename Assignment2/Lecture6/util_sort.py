@@ -1,6 +1,8 @@
 # Sort wrapper
 # Done because I'm tired of Flake8 screams
 
+from util_fast_sort import fast_merge_sort
+
 import os
 import sys
 
@@ -18,7 +20,9 @@ def gen_random_list(size):
     return get_random_list(size)
 
 
-def sort_algorithms():
+def sort_algorithms(fastMergeSort=False):
+    if fastMergeSort:
+        return [fast_merge_sort, sa.quick_sort]
     return [sa.merge_sort, sa.quick_sort]
 
 

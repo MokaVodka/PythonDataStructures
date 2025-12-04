@@ -20,13 +20,18 @@ def heap_sort(lst):
 
 # -- Simplify sort_run --
 # Run all sorts and cache their results
-def run_sorts():
+# FastMergeSort: Toggle to use faster merge sort, else, use the
+#                in-place merge sort implemented in Assignment 1-3
+def run_sorts(fastMergeSort=False):
     labels = ['merge', 'quick', 'heap']
-    algos = su.sort_algorithms()
+    algos = su.sort_algorithms(fastMergeSort)
     algos.append(heap_sort)
 
     # Limit of merge sort on my machine
     sizeRange = range(10 * 1000, 160 * 1000, 10 * 1000)
+    if fastMergeSort:
+        sizeRange = range(100 * 1000, 1500 * 1000, 100 * 1000)
+
     sizes = [i for i in sizeRange]
     times = []
 
@@ -96,7 +101,11 @@ def run_time_plot(sizeTimes):
 
 # -- Excecute experiment --
 def experiments():
-    sizeTimes = run_sorts()
+    # Toggle to use faster merge sort, else,
+    # use in-place merge sort implemented in Assignment 1-3
+    fastMergeSort = True
+
+    sizeTimes = run_sorts(fastMergeSort)
     compare_algo(sizeTimes)
     run_time_plot(sizeTimes)
 
