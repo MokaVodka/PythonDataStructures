@@ -23,6 +23,6 @@ def sort_algorithms():
             sa.merge_sort, sa.quick_sort, sa.improved_quick_sort]
 
 
-# Can't use Deque as name because that's the same as Deque class
+# Can't use Deque as name because that's the same as Deque file name
 def create_Deque():
     return deq.Deque()
