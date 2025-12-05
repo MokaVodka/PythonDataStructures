@@ -98,7 +98,7 @@ def find_input_size(sortAlgo, startSize=0, increment=0):
     # Rerun and print the size range (for debugging)
     rerun = input('Rerun sort with sizeRange and time printed? (y/ANY): ')
     if rerun == 'y':
-        sa.nsum_run(sortAlgo, sizeRange, 3, True)
+        sa.sort_run(sortAlgo, sizeRange, 3, True)
 
     print('')
 

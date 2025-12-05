@@ -28,9 +28,9 @@ def run_sorts(fastMergeSort=False):
     algos.append(heap_sort)
 
     # Limit of merge sort on my machine
-    sizeRange = range(10 * 1000, 160 * 1000, 10 * 1000)
+    sizeRange = range(2000, 13501, 800)
     if fastMergeSort:
-        sizeRange = range(100 * 1000, 1500 * 1000, 100 * 1000)
+        sizeRange = range(100 * 1000, 600 * 1000, 35 * 1000)
 
     sizes = [i for i in sizeRange]
     times = []
@@ -39,7 +39,7 @@ def run_sorts(fastMergeSort=False):
 
     for i in range(0, 3):
         print(f'Running {labels[i]} sort...')
-        _, time = su.sort_run(algos[i], sizeRange, 5)
+        _, time = su.sort_run(algos[i], sizeRange, 5, True)
         times.append(time)
 
     print('')

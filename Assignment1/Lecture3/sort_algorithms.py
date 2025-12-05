@@ -14,6 +14,7 @@ from util import gen_random_list
 def sort_run(sortAlgo, sizeRange, repeat=1, printAvgTime=False, lst=None):
     sizes = [size for size in sizeRange]
     times = []
+    useRandom = lst is None
 
     for size in sizes:
         # Feedback console print
@@ -24,7 +25,7 @@ def sort_run(sortAlgo, sizeRange, repeat=1, printAvgTime=False, lst=None):
 
         # Repeat runs to get average time
         for _ in range(0, repeat):
-            if lst is None:
+            if useRandom:
                 lst = gen_random_list(size)
 
             timeStart = time.time()

@@ -13,7 +13,7 @@ from util import filter_plot_data
 def run_sorts(sizeRange, isRandom):
     labels = ['quick', 'improved quick']
     algos = [sa.quick_sort, sa.improved_quick_sort]
-    repeat = 10
+    repeat = 5
 
     sizes = [i for i in sizeRange]
     times = []
@@ -120,7 +120,7 @@ def run_time_plot(sizeTimes, isRandom=False):
 
     scatterPlot.set_title('Run times for quick sort algorithms')
     scatterPlot.set_xlabel('Input list size')
-    scatterPlot.set_ylabel(f'Average time of 10 runs with {label} lists')
+    scatterPlot.set_ylabel(f'Average time of 5 runs with {label} lists')
     scatterPlot.legend()
     plot.show()
 
@@ -129,7 +129,7 @@ def run_time_plot(sizeTimes, isRandom=False):
 def experiments():
     # Limit of quick sort on my machine
     # Change values for better data
-    sizeRange = range(50 * 1000, 5000 * 1000 + 1, 350 * 1000)
+    sizeRange = range(50 * 1000, 750 * 1000 + 1, 50 * 1000)
     sizeTimesRandom = run_sorts(sizeRange, True)
     compare_algo(sizeTimesRandom, True)
     run_time_plot(sizeTimesRandom, True)
