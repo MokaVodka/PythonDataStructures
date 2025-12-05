@@ -110,4 +110,6 @@ def experiments():
     run_time_plot(sizeTimes)
 
 
+# Comment out to not disturb test run
+# Otherwise, you'll get a delay until matplotlib pops up and closes
 experiments()

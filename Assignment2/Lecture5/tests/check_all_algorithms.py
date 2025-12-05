@@ -7,7 +7,7 @@ def check_all_algorithms():
 
     for algo in algos:
         print(f'Checking {algo.__name__}()...')
-        test_sorting.test_main(algo)
+        test_sorting.main_test(algo)
 
 
 check_all_algorithms()
