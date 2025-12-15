@@ -74,7 +74,14 @@ class BstNode:
         return count
 
     def max_depth(self):
-        pass
+        count, leftCount, rightCount = 1, 0, 0
+
+        if self.left is not None:
+            leftCount += self.left.count()
+        if self.right is not None:
+            rightCount += self.right.count()
+
+        return count + max(leftCount, rightCount)
 
     def lr_inorder(self, lst):
         pass
