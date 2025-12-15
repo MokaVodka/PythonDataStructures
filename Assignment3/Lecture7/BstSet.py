@@ -102,7 +102,17 @@ class BstNode:
         lst.append(self.value)
 
     def dot(self, parent):
-        pass
+        txt = ''
+
+        if self.left is not None:
+            txt += f'  {self.value} -- {self.left.value}\n'
+            txt += self.left.dot(self)
+
+        if self.right is not None:
+            txt += f'  {self.value} -- {self.right.value}\n'
+            txt += self.right.dot(self)
+
+        return txt
 
     # Find node X to be deleted
     # - Case 1: X with no left child ==> replace X with right child of X
@@ -113,7 +123,7 @@ class BstNode:
 
     # VG Exercise
     def pretty_dot(self, parent, id_count):
-        pass
+        return ''  # Prevent debug errors
 
 
 #
