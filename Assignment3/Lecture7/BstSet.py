@@ -32,20 +32,20 @@ class BstNode:
         return txt
 
     def search(self, val):
+        found = False
+
         if val < self.value:
-            if self.left is None:
-                return False
-            else:
-                self.left.search(val)
+            if self.left is not None:
+                found = self.left.search(val)
 
         elif val > self.value:
-            if self.right is None:
-                return False
-            else:
-                self.right.search(val)
+            if self.right is not None:
+                found = self.right.search(val)
 
-        else:
-            return True
+        if val == self.value:
+            found = True
+
+        return found
 
     def count(self):
         count = 1
