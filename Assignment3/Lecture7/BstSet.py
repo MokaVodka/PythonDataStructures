@@ -93,7 +93,13 @@ class BstNode:
             self.right.lr_inorder(lst)
 
     def rl_postorder(self, lst):
-        pass
+        if self.right is not None:
+            self.right.rl_postorder(lst)
+
+        if self.left is not None:
+            self.left.rl_postorder(lst)
+
+        lst.append(self.value)
 
     def dot(self, parent):
         pass
