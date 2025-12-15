@@ -77,14 +77,20 @@ class BstNode:
         count, leftCount, rightCount = 1, 0, 0
 
         if self.left is not None:
-            leftCount += self.left.count()
+            leftCount += self.left.max_depth()
         if self.right is not None:
-            rightCount += self.right.count()
+            rightCount += self.right.max_depth()
 
         return count + max(leftCount, rightCount)
 
     def lr_inorder(self, lst):
-        pass
+        if self.left is not None:
+            self.left.lr_inorder()
+
+        if self.right is not None:
+            self.right.lr_inorder()
+
+        lst.append(self.value)
 
     def rl_postorder(self, lst):
         pass
