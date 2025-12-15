@@ -85,12 +85,12 @@ class BstNode:
 
     def lr_inorder(self, lst):
         if self.left is not None:
-            self.left.lr_inorder()
-
-        if self.right is not None:
-            self.right.lr_inorder()
+            self.left.lr_inorder(lst)
 
         lst.append(self.value)
+
+        if self.right is not None:
+            self.right.lr_inorder(lst)
 
     def rl_postorder(self, lst):
         pass
