@@ -1,0 +1,59 @@
+
+Provided
+__str__ { 6 7 12 14 15 23 29 30 32 37 }
+
+Mandatory
+search(30) True
+search(31) False
+size 10
+count_internal 6
+max_depth 4
+lr_inorder [6, 7, 12, 14, 15, 23, 29, 30, 32, 37]
+rl_postorder [32, 29, 30, 37, 14, 15, 7, 6, 12, 23]
+dot printout
+graph BST {
+   23 -- 12
+   12 -- 6
+   6 -- 7
+   12 -- 15
+   15 -- 14
+   23 -- 37
+   37 -- 30
+   30 -- 29
+   30 -- 32
+}
+
+delete(6) True
+delete(8) False
+delete(37) True
+delete(23) True
+size 7
+max_depth 4
+dot printout after delete
+graph BST {
+   15 -- 12
+   12 -- 7
+   12 -- 14
+   15 -- 32
+   32 -- 30
+   30 -- 29
+}
+
+VG Exercise
+pretty dot printout
+graph BST {
+   12 -- 7
+   15 -- 12
+   12 -- 14
+   30 -- 29
+   C3 [style=invis, width=0, label="  "]
+   30 -- C3 [style=invis];
+   R4 [style=invis, width=0, label="   "]
+   30 -- R4 [style=invis];
+   32 -- 30
+   C2 [style=invis, width=0, label="  "]
+   32 -- C2 [style=invis];
+   R3 [style=invis, width=0, label="   "]
+   32 -- R3 [style=invis];
+   15 -- 32
+}
