@@ -48,10 +48,30 @@ class BstNode:
             return True
 
     def count(self):
-        pass
+        count = 1
+
+        if self.left is not None:
+            count += self.left.count()
+        if self.right is not None:
+            count += self.right.count()
+
+        return count
 
     def count_internal(self):
-        pass
+
+        # Is leaf, do not count
+        if self.left is None and self.right is None:
+            return 0
+
+        # Same as self.count(), but use count_internal() instead
+        count = 1
+
+        if self.left is not None:
+            count += self.left.count_internal()
+        if self.right is not None:
+            count += self.right.count_internal()
+
+        return count
 
     def max_depth(self):
         pass
