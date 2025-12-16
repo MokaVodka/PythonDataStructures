@@ -104,12 +104,13 @@ class BstNode:
     def dot(self, parent):
         txt = ''
 
+        if parent is not None:
+            txt += f'  {parent.value} -- {self.value}\n'
+
         if self.left is not None:
-            txt += f'  {self.value} -- {self.left.value}\n'
             txt += self.left.dot(self)
 
         if self.right is not None:
-            txt += f'  {self.value} -- {self.right.value}\n'
             txt += self.right.dot(self)
 
         return txt
