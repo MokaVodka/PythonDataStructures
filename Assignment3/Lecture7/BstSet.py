@@ -115,12 +115,89 @@ class BstNode:
 
         return txt
 
+    # -- This is for delete()
+    def _get_largest(self, startNode=None, otherToCompare=None):
+        currNode = self if startNode is None else startNode
+        curr = (currNode, currNode.value)
+
+        max = curr if otherToCompare is None else otherToCompare
+        _, maxVal = max
+
+        if maxVal < currNode.value:
+            max = curr
+
+        if currNode.left is not None:
+            max = currNode.left._get_largest(otherToCompare=max)
+
+        if currNode.right is not None:
+            max = currNode.right._get_largest(otherToCompare=max)
+
+        return max
+
+    def _get_parent_node(self, node, startNode=None):
+        parent = None
+        currNode = self if startNode is None else startNode
+
+        if currNode.left is node or currNode.right is node:
+            parent = currNode
+
+        elif currNode.left is not None:
+            parent = currNode.left._get_parent_node(node)
+
+        elif currNode.right is not None:
+            parent = currNode.right._get_parent_node(node)
+
+        return parent
+
+    def _replace_child(self, child, replacement):
+        if self.left is child:
+            self.left = replacement
+        if self.right is child:
+            self.right = replacement
+
     # Find node X to be deleted
     # - Case 1: X with no left child ==> replace X with right child of X
     # - Case 2: X as a left child ==> find max in left subtree,
     #           move max value to X and remove max node
     def delete(self, value, parent):
-        pass
+        deleteNode = False
+
+        # Same as search
+        if value < self.value:
+            if self.left is not None:
+                deleteNode = self.left.delete(value, self)
+
+        elif value > self.value:
+            if self.right is not None:
+                deleteNode = self.right.delete(value, self)
+
+        # Start deletion
+        elif value == self.value:
+            deleteNode = True
+
+            # Case 1: no left child
+            # Replace self on parent to self.right
+            if self.left is None:
+                parent._replace_child(self, self.right)
+
+            # Case 2: has left child
+            else:
+                # Get max value of left branch
+                largest, maxVal = self.left._get_largest()
+
+                if largest is not None:
+                    # Override max value to current node
+                    self.value = maxVal
+
+                    # Connect largest's left child to largest parent's right
+                    parent = self._get_parent_node(largest, self.left)
+                    if largest.left is not None:
+                        parent.right = largest.left
+
+                    # Delete largest on largest parent
+                    parent._replace_child(largest, None)
+
+        return deleteNode
 
     # VG Exercise
     def pretty_dot(self, parent, id_count):

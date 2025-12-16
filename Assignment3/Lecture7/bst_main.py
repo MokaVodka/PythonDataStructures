@@ -27,6 +27,7 @@ print("delete(8)", bst.delete(8))
 print("delete(37)", bst.delete(37))
 print("delete(23)", bst.delete(23))
 print("size", bst.size())
+print("max_depth", bst.max_depth())
 print("dot printout after delete")
 print(bst.dot())
 
