@@ -1,5 +1,6 @@
 import random
 import BstSet as BST
+import os
 
 
 # Generates a random tree with 1023 unique values
@@ -17,9 +18,13 @@ def generate_tree():
 
 #  Save dot text of tree (before and after delete)
 def write_tree(bst, isBeforeDelete):
-    fileName = 'before_delete' if isBeforeDelete else 'after_delete'
+    # This should work if opened directory is Assignment3
+    filePath = os.path.normcase(os.getcwd() + '/lecture7/output/')
+    if not os.path.exists(filePath):
+        os.mkdir(filePath)
 
-    with open(f'{fileName}.txt', 'w', encoding='utf-8') as file:
+    fileName = 'before_delete' if isBeforeDelete else 'after_delete'
+    with open(f'{filePath}{fileName}.txt', 'w', encoding='utf-8') as file:
         file.write(bst.dot())
 
 
