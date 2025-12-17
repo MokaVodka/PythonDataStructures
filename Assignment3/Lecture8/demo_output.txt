@@ -1,0 +1,75 @@
+
+Adding name/age pairs
+Size: 19
+Capacity: 47
+Update certain values
+Table content, only non-empty slots
+1       ('Tom', 1)
+2       ('Alvar', 1)
+11      ('Gustav', 32)
+13      ('Pappa', 98)
+14      ('Alice', 27)
+16      ('Morre', 118)
+17      ('Johanna', 37)
+19      ('Maria', 61)
+21      ('Carina', 59)
+23      ('Jonas', 62)
+28      ('Ida', 29)
+31      ('Nils', 61)
+32      ('Hampus', 28)
+37      ('Kia', 65)
+38      ('David', 29)
+39      ('Mamma', 96)
+42      ('Samuel', 32)
+44      ('Alexander', 35)
+46      ('Adam', 36)
+
+
+Looking up certain values
+Look up Jonas 62
+Look up Samuel 32
+Look up Daniel None
+
+Remove certain values
+Remove Mamma: True
+Remove Pappa: True
+Remove Morre: True
+Remove Hampus: True
+Remove Kia: True
+Remove Adam: True
+Remove Maria: True
+Remove Carina: True
+Remove Ida: True
+Remove Daniel: False
+Looking up Jonas:  62
+Looking up Samuel:  32
+Looking up David:  29
+Looking up Johanna:  37
+Looking up Pappa:  None
+
+Size: 10
+Capacity: 47
+Table content, only non-empty slots
+1       ('Tom', 1)
+2       ('Alvar', 1)
+11      ('Gustav', 32)
+13      <object object at 0x104f08490>
+14      ('Alice', 27)
+16      <object object at 0x104f08490>
+17      ('Johanna', 37)
+19      <object object at 0x104f08490>
+21      <object object at 0x104f08490>
+23      ('Jonas', 62)
+28      <object object at 0x104f08490>
+31      ('Nils', 61)
+32      <object object at 0x104f08490>
+37      <object object at 0x104f08490>
+38      ('David', 29)
+39      <object object at 0x104f08490>
+42      ('Samuel', 32)
+44      ('Alexander', 35)
+46      <object object at 0x104f08490>
+
+
+Pair count: 10
+[('Tom', 1), ('Alvar', 1), ('Gustav', 32), ('Alice', 27), ('Johanna', 37), ('Jonas', 62), ('Nils', 61), ('David', 29), ('Samuel', 32), ('Alexander', 35)]
