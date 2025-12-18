@@ -28,7 +28,7 @@ class HashMap:
         # Pass all cases, check if number is prime
         # Up until square root of n (for n = sqrt(n)^2)
         # Increment by 6 to skip mults of 2 and 3
-        for i in range(5, math.sqrt(n) + 1, 6):
+        for i in range(5, int(math.sqrt(n) + 1), 6):
             if n % i == 0:
                 return False
 
@@ -90,11 +90,14 @@ class HashMap:
     # Increase table size. The size is always a prime number
     def rehash(self):
         copy = self.table
-        self.capacity = 2 * self.capacity
+
+        self.capacity = self.next_prime(2 * self.capacity)
         self.table = [None] * self.capacity
+        self.size = 0
+
         for element in copy:
             if element is not None:
-                self.put(copy[0], copy[1])
+                self.put(element[0], element[1])
 
     # Add key/value pair if key not already added.
     # Updates value if key already added.
