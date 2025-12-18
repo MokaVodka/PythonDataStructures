@@ -75,7 +75,10 @@ class HashMap:
 
     # Prime number based hash function for strings
     def prime_hash(self, str):
-        pass
+        hash = 7
+        for char in str:
+            hash = hash * 31 + ord(char)
+        return hash
 
     # Increase table size. The size is always a prime number
     def rehash(self):
