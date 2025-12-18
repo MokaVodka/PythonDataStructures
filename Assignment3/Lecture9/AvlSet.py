@@ -10,6 +10,11 @@ class AvlNode:
         rightHeight = 0 if self.right is None else self.right.height
         self.height = 1 + max(leftHeight, rightHeight)
 
+    def _get_balance(self):
+        leftHeight = 0 if self.left is None else self.left.height
+        rightHeight = 0 if self.right is None else self.right.height
+        return rightHeight - leftHeight
+
     def add(self, val):
         # Add value to left or right
         if val < self.value:
@@ -66,6 +71,10 @@ class AvlNode:
 
         if self.right is not None:
             txt += self.right.dot(self)
+
+        # Node annotation
+        annotation = f'{self.height}, {self._get_balance()}'
+        txt += f'{self.value} [label="{self.value} ({annotation})"]\n'
 
         return txt
 
