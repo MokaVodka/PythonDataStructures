@@ -178,7 +178,41 @@ class BstNode:
 
     # VG Exercise
     def pretty_dot(self, parent, id_count):
-        return ''  # Prevent debug errors
+        txt = ''
+
+        if parent is not None:
+            # Finding childless left/right
+            leftInvisChild = parent.left is None
+            rightInvisChild = parent.right is None
+
+            # Common text
+            parentTxt = f'  {parent.value} --'
+            invisNode = '[style=invis, width=0, label="  "]'
+
+            # weight helps shift the line off-center
+            invisLine = '[weight=2 style=invis];'
+
+            if leftInvisChild:
+                childID = f'L{id_count}'
+                txt += f'  {childID} {invisNode}\n'
+                txt += f'{parentTxt} {childID} {invisLine}\n'
+
+            txt += f'{parentTxt} {self.value}\n'
+
+            if rightInvisChild:
+                childID = f'R{id_count}'
+                txt += f'  {childID} {invisNode}\n'
+                txt += f'{parentTxt} {childID} {invisLine}\n'
+
+        if self.left is not None:
+            id_count += 1
+            txt += self.left.pretty_dot(self, id_count)
+
+        if self.right is not None:
+            id_count += 1
+            txt += self.right.pretty_dot(self, id_count)
+
+        return txt
 
 
 #
