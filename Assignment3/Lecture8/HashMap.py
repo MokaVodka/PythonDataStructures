@@ -63,15 +63,15 @@ class HashMap:
 
     # Element count
     def get_size(self):
-        pass
+        return self.size
 
     # Table size
     def get_capacity(self):
-        pass
+        return self.capacity
 
     # Load factor
     def get_loadfactor(self):
-        pass
+        return self.load_factor
 
     # Prime number based hash function for strings
     def prime_hash(self, str):
