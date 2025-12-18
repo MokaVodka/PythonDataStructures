@@ -15,6 +15,17 @@ class AvlNode:
         rightHeight = 0 if self.right is None else self.right.height
         return rightHeight - leftHeight
 
+    def _rebalance(self):
+        balance = self._get_balance()
+
+        # Left heavy ==> LL or LR rotation
+        if balance < -1:
+            pass
+
+        # Right heavy ==> RR or RL rotation
+        if balance > 1:
+            pass
+
     def add(self, val):
         # Add value to left or right
         if val < self.value:
@@ -28,8 +39,9 @@ class AvlNode:
             else:
                 self.right.add(val)
 
-        # Update height
-            self._update_height()
+        # Update height & Rebalance
+        self._update_height()
+        self._rebalance()
 
     def __str__(self):
         txt = ""
@@ -136,6 +148,10 @@ class AvlNode:
                 # Delete largest on largest parent
                 else:
                     maxParent._replace_child(maxNode, None)
+
+        # Update height & Rebalance
+        self._update_height()
+        self._rebalance()
 
         return deleteNode
 
