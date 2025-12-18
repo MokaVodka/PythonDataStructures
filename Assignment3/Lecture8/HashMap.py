@@ -174,7 +174,28 @@ class HashMap:
     # Remove key/value pair for given key.
     # Returns True if succesful, returns False if key is missing.
     def remove(self, key):
-        pass
+        # Compute hash value
+        hash = self.prime_hash(str(key))
+
+        # Find bucket
+        start = hash % self.capacity
+        bucket = start
+        visited = 0
+        increment = 1
+
+        while visited <= self.size:
+            if self._is_key(bucket, key):
+                self.table[bucket] = self.delete
+                self.size -= 1
+                return True
+
+            # Collision, find next bucket with quadratic probing
+            else:
+                bucket, increment = self._next_bucket(bucket, start, increment)
+                visited += 1
+
+        # Visited every key but no match found
+        return False
 
     # Returns all key/value pairs as a list of tuples.
     # Does not include None and Delete entries
