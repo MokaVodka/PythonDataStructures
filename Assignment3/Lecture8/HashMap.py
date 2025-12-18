@@ -89,7 +89,12 @@ class HashMap:
 
     # Increase table size. The size is always a prime number
     def rehash(self):
-        pass
+        copy = self.table
+        self.capacity = 2 * self.capacity
+        self.table = [None] * self.capacity
+        for element in copy:
+            if element is not None:
+                self.put(copy[0], copy[1])
 
     # Add key/value pair if key not already added.
     # Updates value if key already added.
