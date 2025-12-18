@@ -200,4 +200,8 @@ class HashMap:
     # Returns all key/value pairs as a list of tuples.
     # Does not include None and Delete entries
     def as_list(self):
-        pass
+        lst = []
+        for element in self.table:
+            if element is not None and element is not self.delete:
+                lst.append(element)
+        return lst
