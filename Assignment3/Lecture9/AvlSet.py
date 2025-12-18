@@ -5,26 +5,134 @@ class AvlNode:
         self.right = right
         self.height = 1
 
-    def _update_height(self):
+    def _get_children_height(self):
         leftHeight = 0 if self.left is None else self.left.height
         rightHeight = 0 if self.right is None else self.right.height
-        self.height = 1 + max(leftHeight, rightHeight)
+        return leftHeight, rightHeight
 
-    def _get_balance(self):
-        leftHeight = 0 if self.left is None else self.left.height
-        rightHeight = 0 if self.right is None else self.right.height
-        return rightHeight - leftHeight
+    def _get_height(self, childrenHeight):
+        self.height = 1 + max(childrenHeight)
 
-    def _rebalance(self):
-        balance = self._get_balance()
+    def _get_balance(self, childrenHeight):
+        left, right = childrenHeight
+        return right - left
 
-        # Left heavy ==> LL or LR rotation
+    def _rebalance(self, childrenHeight):
+        balance = self._get_balance(childrenHeight)
+
+        # Unbalanced subtree root, 1st node, and 2nd node
+        root, node1, node2 = self, None, None
+
+        # Left heavy | LL or LR rotation
         if balance < -1:
-            pass
+            # Unbalanced left node
+            node1 = self.left
+            leftHeight, rightHeight = node1._get_children_height()
 
-        # Right heavy ==> RR or RL rotation
-        if balance > 1:
-            pass
+            # LR | LR rotate
+            if rightHeight >= leftHeight:
+                # Right grandchild node that's causing the imbalance
+                node2 = node1.right
+
+                # Copy branches before moving (override) them
+                # Remember: Left -> Right is Lowest -> Highest (value)
+                # branchLow = node1.left  # Redundant, branch don't move
+                branchMidLow = node2.left
+                branchMidHigh = node2.right
+                branchHigh = root.right
+
+                # 1. Swap root and grandchild values
+                # (node < grandchild < root)
+                root.value, node2.value = node2.value, root.value
+
+                # 2. Move grandchild node (with root value) to right of root
+                root.right = node2
+
+                # 3. Move branches to appropriate nodes
+                # Low -> left ... High -> right
+                node1.right = branchMidLow
+                node2.left = branchMidHigh
+                node2.right = branchHigh
+
+            # LL | LL rotate
+            else:
+                # Copy branches before moving (override) them
+                # Remember: Left -> Right is Lowest -> Highest (value)
+                branchLow = node1.left
+                branchMid = node1.right
+                branchHigh = root.right
+
+                # 1. Swap root and node values (node < root)
+                root.value, node1.value = node1.value, root.value
+
+                # 2. Move node (with root value) to right of root
+                root.right = node1
+
+                # 3. Move branches to appropriate nodes
+                # Low -> left ... High -> right
+                root.left = branchLow
+                node1.left = branchMid
+                node1.right = branchHigh
+
+        # Right heavy | RR or RL rotation
+        elif balance > 1:
+            # Unbalanced right node
+            node1 = self.right
+            leftHeight, rightHeight = node1._get_children_height()
+
+            # RR | RR rotate
+            if rightHeight >= leftHeight:
+
+                # Copy branches before moving (override) them
+                # Remember: Left -> Right is Lowest -> Highest (value)
+                branchLow = root.left
+                branchMid = node1.left
+                branchHigh = node1.right
+
+                # 1. Swap root and node values (root < node)
+                root.value, node1.value = node1.value, root.value
+
+                # 2. Move node (with root value) to left of root
+                root.left = node1
+
+                # 3. Move branches to appropriate nodes
+                # Low -> left ... High -> right
+                node1.left = branchLow
+                node1.right = branchMid
+                root.right = branchHigh
+
+            # RL | RL rotate
+            else:
+                # Left grandchild node that's causing the imbalance
+                node2 = node1.left
+
+                # Copy branches before moving (override) them
+                # Remember: Left -> Right is Lowest -> Highest (value)
+                branchLow = root.left
+                branchMidLow = node2.left
+                branchMidHigh = node2.right
+                # branchHigh = node1.right  # Redundant, branch don't move
+
+                # 1. Swap root and grandchild values
+                # (root < grandchild < node)
+                root.value, node2.value = node2.value, root.value
+
+                # 2. Move grandchild node (with root value) to left of root
+                root.left = node2
+
+                # 3. Move branches to appropriate nodes
+                # Low -> left ... High -> right
+                node2.left = branchLow
+                node2.right = branchMidLow
+                node1.left = branchMidHigh
+
+        # Update height
+        if balance < -1 or balance > 1:
+            if node2 is not None:
+                node2._get_height(node2._get_children_height())
+
+            node1._get_height(node1._get_children_height())
+            root._get_height(self._get_children_height())
 
     def add(self, val):
         # Add value to left or right
@@ -40,8 +148,9 @@ class AvlNode:
                 self.right.add(val)
 
         # Update height & Rebalance
-        self._update_height()
-        self._rebalance()
+        childrenHeight = self._get_children_height()
+        self._get_height(childrenHeight)
+        self._rebalance(childrenHeight)
 
     def __str__(self):
         txt = ""
@@ -85,8 +194,9 @@ class AvlNode:
             txt += self.right.dot(self)
 
         # Node annotation
-        annotation = f'{self.height}, {self._get_balance()}'
-        txt += f'{self.value} [label="{self.value} ({annotation})"]\n'
+        balance = self._get_balance(self._get_children_height())
+        annotation = f'{self.height}, {balance}'
+        txt += f'  {self.value} [label="{self.value} ({annotation})"]\n'
 
         return txt
 
@@ -150,8 +260,9 @@ class AvlNode:
                     maxParent._replace_child(maxNode, None)
 
         # Update height & Rebalance
-        self._update_height()
-        self._rebalance()
+        childrenHeight = self._get_children_height()
+        self._get_height(childrenHeight)
+        self._rebalance(childrenHeight)
 
         return deleteNode
 
