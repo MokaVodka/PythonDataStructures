@@ -87,7 +87,39 @@ class HashMap:
     # Add key/value pair if key not already added.
     # Updates value if key already added.
     def put(self, key, value):
-        pass
+        # Check for rehash
+        if self.size >= self.capacity * self.load_factor:
+            self.rehash()
+
+        # Compute hash value
+        hash = self.prime_hash(str(key))
+
+        # Find bucket (tableIndex)
+        start = hash % self.capacity
+        tableIndex = start
+        stopLoop = False
+        increment = 1
+
+        while not stopLoop:
+            # Add to bucket (table[tableIndex]) if empty
+            if self.table[tableIndex] is None:
+                self.table[tableIndex] = (key, value)
+                self.size += 1
+                stopLoop = True
+
+            # Update value if key existed
+            elif self.table[tableIndex][0] == key:
+                self.table[tableIndex] = (key, value)
+                stopLoop = True
+
+            # Find next bucket (tableIndex) with quadratic probing
+            else:
+                tableIndex = start + increment ** 2
+                increment += 1
+
+                # Reach end, wrap to beginning
+                if tableIndex >= self.capacity:
+                    tableIndex = tableIndex % self.capacity
 
     # Returns value for a given key, returns None for missing key.
     def get(self, key):
