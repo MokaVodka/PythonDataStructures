@@ -59,7 +59,14 @@ class HashMap:
 
     # Display table content. Only non-empty slots
     def __str__(self):
-        pass
+        txt = ''
+
+        for index in range(0, len(self.table)):
+            element = self.table[index]
+            if element is not None:
+                txt += f'{index}       {element}\n'
+
+        return txt
 
     # Element count
     def get_size(self):
