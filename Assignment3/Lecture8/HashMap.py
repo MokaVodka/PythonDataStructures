@@ -99,6 +99,22 @@ class HashMap:
             if element is not None:
                 self.put(element[0], element[1])
 
+    def _is_key(self, bucket, key):
+        element = self.table[bucket]
+        isOccupied = element is not None
+        isNotDeleted = isOccupied and element is not self.delete
+        return isNotDeleted and element[0] == key
+
+    def _next_bucket(self, bucket, start, increment):
+        bucket = start + increment ** 2
+        increment += 1
+
+        # Reach end, wrap to beginning
+        if bucket >= self.capacity:
+            bucket = bucket % self.capacity
+
+        return bucket, increment
+
     # Add key/value pair if key not already added.
     # Updates value if key already added.
     def put(self, key, value):
@@ -109,60 +125,48 @@ class HashMap:
         # Compute hash value
         hash = self.prime_hash(str(key))
 
-        # Find bucket (tableIndex)
+        # Find bucket
         start = hash % self.capacity
-        tableIndex = start
+        bucket = start
         stopLoop = False
         increment = 1
 
         while not stopLoop:
-            # Add to bucket (table[tableIndex]) if empty
-            if self.table[tableIndex] is None:
-                self.table[tableIndex] = (key, value)
+            # Add to bucket (table[bucket]) if empty
+            if self.table[bucket] is None:
+                self.table[bucket] = (key, value)
                 self.size += 1
                 stopLoop = True
 
             # Update value if key existed
-            elif self.table[tableIndex][0] == key:
-                self.table[tableIndex] = (key, value)
+            elif self.table[bucket][0] == key:
+                self.table[bucket] = (key, value)
                 stopLoop = True
 
-            # Collision, find next bucket (tableIndex) with quadratic probing
+            # Collision, find next bucket with quadratic probing
             else:
-                tableIndex = start + increment ** 2
-                increment += 1
-
-                # Reach end, wrap to beginning
-                if tableIndex >= self.capacity:
-                    tableIndex = tableIndex % self.capacity
+                bucket, increment = self._next_bucket(bucket, start, increment)
 
     # Returns value for a given key, returns None for missing key.
     def get(self, key):
         # Compute hash value
         hash = self.prime_hash(str(key))
 
-        # Find bucket (tableIndex)
+        # Find bucket (bucket)
         start = hash % self.capacity
-        tableIndex = start
+        bucket = start
         visited = 0
         increment = 1
 
         while visited <= self.size:
-            element = self.table[tableIndex]
-
             # Return value if match key
-            if element is not None and element[0] == key:
-                return element[1]
+            if self._is_key(bucket, key):
+                return self.table[bucket][1]
 
-            # Collision, find next bucket (tableIndex) with quadratic probing
+            # Collision, find next bucket with quadratic probing
             else:
-                tableIndex = start + increment ** 2
-                increment += 1
+                bucket, increment = self._next_bucket(bucket, start, increment)
                 visited += 1
-
-                # Reach end, wrap to beginning
-                if tableIndex >= self.capacity:
-                    tableIndex = tableIndex % self.capacity
 
         # Visited every key but no match found
         return None
