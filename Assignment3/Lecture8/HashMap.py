@@ -127,7 +127,7 @@ class HashMap:
                 self.table[tableIndex] = (key, value)
                 stopLoop = True
 
-            # Find next bucket (tableIndex) with quadratic probing
+            # Collision, find next bucket (tableIndex) with quadratic probing
             else:
                 tableIndex = start + increment ** 2
                 increment += 1
@@ -138,7 +138,34 @@ class HashMap:
 
     # Returns value for a given key, returns None for missing key.
     def get(self, key):
-        pass
+        # Compute hash value
+        hash = self.prime_hash(str(key))
+
+        # Find bucket (tableIndex)
+        start = hash % self.capacity
+        tableIndex = start
+        visited = 0
+        increment = 1
+
+        while visited <= self.size:
+            element = self.table[tableIndex]
+
+            # Return value if match key
+            if element is not None and element[0] == key:
+                return element[1]
+
+            # Collision, find next bucket (tableIndex) with quadratic probing
+            else:
+                tableIndex = start + increment ** 2
+                increment += 1
+                visited += 1
+
+                # Reach end, wrap to beginning
+                if tableIndex >= self.capacity:
+                    tableIndex = tableIndex % self.capacity
+
+        # Visited every key but no match found
+        return None
 
     # Remove key/value pair for given key.
     # Returns True if succesful, returns False if key is missing.
