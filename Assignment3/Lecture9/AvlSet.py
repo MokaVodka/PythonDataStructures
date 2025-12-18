@@ -3,8 +3,15 @@ class AvlNode:
         self.value = value
         self.left = left
         self.right = right
+        self.height = 1
+
+    def _update_height(self):
+        leftHeight = 0 if self.left is None else self.left.height
+        rightHeight = 0 if self.right is None else self.right.height
+        self.height = 1 + max(leftHeight, rightHeight)
 
     def add(self, val):
+        # Add value to left or right
         if val < self.value:
             if self.left is None:
                 self.left = AvlNode(val, None, None)
@@ -15,6 +22,9 @@ class AvlNode:
                 self.right = AvlNode(val, None, None)
             else:
                 self.right.add(val)
+
+        # Update height
+            self._update_height()
 
     def __str__(self):
         txt = ""
