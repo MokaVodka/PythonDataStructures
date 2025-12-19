@@ -60,6 +60,7 @@ class HashMap:
     # Display table content. Only non-empty slots
     def __str__(self):
         txt = ''
+        txt += 'Table content, only non-empty slots\n'
 
         for index in range(0, len(self.table)):
             element = self.table[index]
@@ -149,6 +150,10 @@ class HashMap:
 
     # Returns value for a given key, returns None for missing key.
     def get(self, key):
+        # Exit if hashMap is empty
+        if self.size < 1:
+            return None
+
         # Compute hash value
         hash = self.prime_hash(str(key))
 
