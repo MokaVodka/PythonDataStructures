@@ -6,15 +6,15 @@ import BstSet as BST
 
 # Computes the mean max depth of a BST
 def mean_max_depth(h):
-    # Trees has 2h − 1 unique (non-duplicate) elements
-    elements = (2 * h) - 1
+    # Trees has 2^h − 1 unique (non-duplicate) elements
+    elements = (2 ** h) - 1
     maxDepths = []
 
     for _ in range(0, 10):
         bst = BST.BstSet()
 
         while bst.size() < elements:
-            data = random.randint(0, 100)
+            data = random.randint(-elements * 2, elements * 2)
             bst.add(data)
 
         maxDepths.append(bst.max_depth())
@@ -25,12 +25,14 @@ def mean_max_depth(h):
 def generate_dataset_for_plot():
     # h = 5, 6, ..., 19, 20
     treeDepths = [h for h in range(5, 21)]
-    treeSizes = [(2 * h) - 1 for h in treeDepths]
+    treeSizes = [(2 ** h) - 1 for h in treeDepths]
     meanDepths = []
 
     # Calculate mean over 10 runs
     for h in treeDepths:
+        print(f'Running {h} height trees...')
         meanDepths.append(mean_max_depth(h))
+    print('Finished caculations!')
 
     return treeSizes, treeDepths, meanDepths
 
@@ -61,11 +63,11 @@ def plot_diagram(treeSizes, treeDepths, meanDepths, isLog):
     # Configure plot (general)
     label = 'Log base 2 tree sizes' if isLog else 'Tree sizes'
 
-    meanDepthPlot.set_title(f'{label} vs Mean max depth')
+    meanDepthPlot.set_title(f'{label} vs Mean max depth (BST)')
     meanDepthPlot.set_xlabel(f'{label}')
     meanDepthPlot.set_ylabel('Mean max depth of 10 runs with random lists')
 
-    treeDepthPlot.set_title(f'{label} vs Tree depth')
+    treeDepthPlot.set_title(f'{label} vs Tree depth (Complete)')
     treeDepthPlot.set_xlabel(f'{label}')
     treeDepthPlot.set_ylabel('Tree depths')
 

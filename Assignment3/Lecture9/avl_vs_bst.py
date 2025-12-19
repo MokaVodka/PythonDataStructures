@@ -7,15 +7,15 @@ import AvlSet as AVL
 
 # Computes the mean max depth of a BST
 def mean_max_depth(h, create_tree):
-    # Trees has 2h − 1 unique (non-duplicate) elements
-    elements = (2 * h) - 1
+    # Trees has 2^h − 1 unique (non-duplicate) elements
+    elements = (2 ** h) - 1
     maxDepths = []
 
     for _ in range(0, 10):
         tree = create_tree()
 
         while tree.size() < elements:
-            data = random.randint(0, 100)
+            data = random.randint(-elements * 2, elements * 2)
             tree.add(data)
 
         maxDepths.append(tree.max_depth())
@@ -26,14 +26,16 @@ def mean_max_depth(h, create_tree):
 def generate_dataset_for_plot():
     # h = 5, 6, ..., 19, 20
     treeDepths = [h for h in range(5, 21)]
-    treeSizes = [(2 * h) - 1 for h in treeDepths]
+    treeSizes = [(2 ** h) - 1 for h in treeDepths]
     bstMeanDepths = []
     avlMeanDepths = []
 
     # Calculate mean over 10 runs
     for h in treeDepths:
+        print(f'Running {h} height trees...')
         bstMeanDepths.append(mean_max_depth(h, create_BST))
         avlMeanDepths.append(mean_max_depth(h, AVL.AvlSet))
+    print('Finished caculations!')
 
     return treeSizes, treeDepths, bstMeanDepths, avlMeanDepths
 
@@ -48,8 +50,8 @@ def plot_diagram(plotData, treeSizeLog):
     meanDepthPlot, logDepthPlot = plots
 
     # Configure plot (visuals)
-    markers = ['+', 'x', '|']
-    colors = ['r', 'g', 'b']
+    markers = ['+', 'x', '*']
+    colors = ['b', 'g', 'r']
     labels = ['Complete tree', 'BST', 'AVL']
     data = [plotData[1], plotData[2], plotData[3]]
 
