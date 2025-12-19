@@ -4,7 +4,7 @@ import os
 
 def program():
     hashMap = hm.HashMap(init_capacity=1000)
-    totalLines = 1900380
+    lines = []
 
     # Reading file
     print('Reading file...  ', end='')
@@ -13,36 +13,28 @@ def program():
     filePath = os.path.normcase(os.getcwd() + '/lecture8/')
     fileName = '1900380_words.txt'
     with open(f'{filePath}{fileName}', 'r', encoding='utf-8') as file:
+        lines = [line.strip() for line in file]
 
-        # Factor of totalLines (Used a calculator for this)
-        increment = 20004
-        lineCount = 0
-        progress, currProgress = -1, 0
+    # Sort words for pointer-based counting
+    lines.sort()
+    totalWords = len(lines)
+    pointer = 0
 
-        while lineCount < totalLines:
+    while pointer < totalWords:
 
-            # Print progress
-            # Since it's kinda boring to wait for the reading to be done
-            currProgress = int(lineCount / totalLines * 100)
-            if currProgress != progress:
-                print(f'{currProgress}%  ', end='')
-                progress = currProgress
+        # Get word count
+        word = lines[pointer]
+        count = 1
 
-            # Read multi-lines
-            lines = []
-            for _ in range(0, increment):
-                lines.append(file.readline().strip())
+        while pointer + count < totalWords:
+            if word != lines[pointer + count]:
+                break
+            else:
+                count += 1
 
-            # Get word count and update hashMap
-            # Also this is super slow, but I can't be bothered to deal with it
-            for word in lines:
-                count = hashMap.get(word)
-                if count is None:
-                    count = 0
-
-                hashMap.put(word, count + 1)
-
-            lineCount += increment
+        # Update hashMap
+        hashMap.put(word, count)
+        pointer += count
 
     print('Done!')
     print()
@@ -55,7 +47,7 @@ def program():
 
     # Print to console
     print(f'File: {filePath}{fileName}')
-    print(f'Word count: {totalLines}')
+    print(f'Word count: {totalWords}')
     print(f'Unique words: {hashMap.get_size()}')
     print()
 
